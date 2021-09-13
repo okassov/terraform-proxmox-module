@@ -19,16 +19,48 @@ This custom module automating creation of Virtual Machnine in Proxmox.
 project-name/
   |__dev/
        |__terragrunt.hcl
-       |__postgresql/
+       |__mongodb/
             |__terragrunt.hcl
   |__stage/
        |__terragrunt.hcl
-       |__postgresql/
+       |__mongodb/
             |__terragrunt.hcl
   |__prod/
        |__terragrunt.hcl
-       |__postgresql/
+       |__mongodb/
             |__terragrunt.hcl
+```
+
+### Example of environment terragrunt.hcl
+
+```
+remote_state {
+  backend = "s3"
+  generate = {
+    path      = "backend.tf"
+    if_exists = "overwrite_terragrunt"
+  }
+  config = {
+    bucket = "terraform-dev-state"
+    key    = "${path_relative_to_include()}/terraform.tfstate"
+    region = "us-east-1"
+    access_key = "changeme"
+    secret_key = "changeme"
+    endpoint = "https://s3.example.com"
+    skip_credentials_validation = true
+    force_path_style = true
+  }
+}
+
+locals {
+  proxmox_api_url  = "https://proxmox.example.com:8006/api2/json"
+  proxmox_api_user = "root@pam"
+  proxmox_api_pass = "changeme"
+  proxmox_ssh_host = "proxmox.example.com"
+  proxmox_ssh_user = "root"
+
+  env = "dev"
+}
 ```
 
 ### Example of terragrunt.hcl for create single VM
