@@ -11,8 +11,8 @@ data "template_file" "cloud_init_template" {
   template = file("${path.module}/files/cloud_init.tmpl")
 
   vars = {
-    ssh_key        = file("${path.module}/files/${var.vm_ssh_public_key}")
-    init_script    = file("${path.module}/files/${var.vm_init_script}")
+    ssh_key        = file("${var.vm_ssh_public_key}")
+    init_script    = file("${var.vm_init_script}")
     hostname       = keys(var.virtual_machines)[count.index]
     ip             = values(var.virtual_machines)[count.index]["ip"]
     netmask_prefix = values(var.virtual_machines)[count.index]["netmask"]
