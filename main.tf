@@ -71,6 +71,7 @@ resource "proxmox_vm_qemu" "virtualMachine" {
   memory                    = each.value.memory
   sockets                   = each.value.sockets
   cores                     = each.value.cores
+  numa                      = true
   agent                     = 0
   hotplug                   = "network,disk,cpu,memory,usb"
   guest_agent_ready_timeout = 90
