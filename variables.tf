@@ -94,7 +94,8 @@ variable "virtual_machines" {
   type = map(object({
     target_node    = string
     memory         = number
-    vcpus          = number
+    sockets        = number
+    cores          = number
     storage        = string
     storage_size   = string
     storage_type   = string

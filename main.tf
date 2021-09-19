@@ -69,7 +69,8 @@ resource "proxmox_vm_qemu" "virtualMachine" {
   os_type                   = "cloud-init"
   cicustom                  = "user=local:snippets/user_data_${var.env}-${var.project}-${each.key}.yml"
   memory                    = each.value.memory
-  vcpus                     = each.value.vcpus
+  sockets                   = each.value.sockets
+  cores                     = each.value.cores
   agent                     = 0
   hotplug                   = "network,disk,cpu,memory,usb"
   guest_agent_ready_timeout = 90
